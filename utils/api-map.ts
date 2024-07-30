@@ -4,5 +4,7 @@ export const ApiSuffix = {
     login:"/login",
     register: "/register",
     getClients: "/api/clients/",
-    addClient: "/api/clients/"
+    addClient: "/api/clients/",
+    getProducts: "/api/products/",
+    addProduct: "/api/products/",
 }

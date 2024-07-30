@@ -1,21 +1,17 @@
-import ClientDialog from "@/components/ClientDialog";
 import Datatable from "@/components/Datatable";
-import {} from "@/components/ui/dialog";
+import ProductDialog from "@/components/ProductDialog";
 import { ApiSuffix, BaseUrl } from "@/utils/api-map";
 import { revalidatePath } from "next/cache";
 
-interface ClientProps {
+interface ProductProps {
   name: string;
-  gst: string;
-  address: string;
-  city: string;
-  district: string;
-  state: string;
+  hsncode: string;
+  description: string;
 }
 
-const Client = async () => {
-  const fetchClients = async () => {
-    let url = BaseUrl + ApiSuffix.getClients;
+const Product = async () => {
+  const fetchProducts = async () => {
+    let url = BaseUrl + ApiSuffix.getProducts;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -29,10 +25,10 @@ const Client = async () => {
     return data;
   };
 
-  const handleAddClient = async (data: ClientProps) => {
+  const handleAddProduct = async (data: ProductProps) => {
     "use server";
+    let url = BaseUrl + ApiSuffix.addProduct;
     try {
-      let url = BaseUrl + ApiSuffix.addClient;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -47,7 +43,7 @@ const Client = async () => {
       if (result.error === true) {
         return false;
       } else {
-        revalidatePath("/client");
+        revalidatePath("/product");
         return true;
       }
     } catch (err) {
@@ -55,19 +51,19 @@ const Client = async () => {
     }
   };
 
-  const clients = await fetchClients();
+  const products = await fetchProducts();
 
   return (
     <>
       <main className=" min-h-screen w-full py-3 px-2 text-gray-400">
-        <h1 className="text-4xl font-bold">Clients</h1>
+        <h1 className="text-4xl font-bold">Products</h1>
         <div className="w-full max-w-7xl p-2 mx-auto">
-          <ClientDialog
+          <ProductDialog
             type="Add"
-            submitHandler={handleAddClient}
+            submitHandler={handleAddProduct}
           />
           <section className="mt-2 w-full">
-            <Datatable data={clients.data} />
+            <Datatable data={products.data} />
           </section>
         </div>
       </main>
@@ -75,4 +71,4 @@ const Client = async () => {
   );
 };
 
-export default Client;
+export default Product;

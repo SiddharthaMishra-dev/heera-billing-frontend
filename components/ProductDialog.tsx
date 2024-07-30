@@ -1,46 +1,43 @@
 "use client";
 
-import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
 import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
-interface ClientInputs {
+interface ProductInputs {
   name: string;
-  gst: string;
-  address: string;
-  city: string;
-  district: string;
-  state: string;
+  hsncode: string;
+  description: string;
 }
 
-interface ClientDialogProps {
+interface ProductDialogProps {
   type: string;
-  submitHandler: (data: ClientInputs) => Promise<any>;
+  submitHandler: (data: ProductInputs) => Promise<any>;
 }
 
-const ClientDialog = ({ type, submitHandler }: ClientDialogProps) => {
+const ProductDialog = ({ type, submitHandler }: ProductDialogProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ClientInputs>();
-  const onSubmit: SubmitHandler<ClientInputs> = async (data) => {
+  } = useForm<ProductInputs>();
+  const onSubmit: SubmitHandler<ProductInputs> = async (data) => {
     setLoading(true);
     setError(null);
     try {
@@ -55,7 +52,6 @@ const ClientDialog = ({ type, submitHandler }: ClientDialogProps) => {
       setLoading(false);
     }
   };
-
   return (
     <>
       <div className="mt-3 flex justify-between items-center">
@@ -68,7 +64,7 @@ const ClientDialog = ({ type, submitHandler }: ClientDialogProps) => {
             type="button"
             className="bg-blue-600 text-white px-4 py-2 rounded-md"
           >
-            Add Client
+            Add Product
           </DialogTrigger>
           <DialogContent className="bg-gray-800 text-gray-50 border-none">
             <DialogHeader>
@@ -93,70 +89,32 @@ const ClientDialog = ({ type, submitHandler }: ClientDialogProps) => {
                   )}
                 </div>
                 <div className="py-2 space-y-1  ">
-                  <label htmlFor="gst">GST</label>
+                  <label htmlFor="hsncode">HSN code</label>
                   <Input
-                    {...register("gst")}
+                    {...register("hsncode")}
                     className="bg-gray-900 border-none text-gray-100"
                   />
-                </div>
-                <div className="py-2 space-y-1  ">
-                  <label htmlFor="address">Address</label>
-                  <Input
-                    {...register("address", { required: true })}
-                    className="bg-gray-900 border-none text-gray-100"
-                  />
-                  {errors.address?.type === "required" && (
+                  {errors.hsncode?.type === "required" && (
                     <p
                       role="alert"
                       className="text-sm text-red-500"
                     >
-                      Address is required
+                      HSN code is required
                     </p>
                   )}
                 </div>
                 <div className="py-2 space-y-1  ">
-                  <label htmlFor="city">City</label>
+                  <label htmlFor="description">Description</label>
                   <Input
-                    {...register("city", { required: true })}
+                    {...register("description", { required: true })}
                     className="bg-gray-900 border-none text-gray-100"
                   />
-                  {errors.city?.type === "required" && (
+                  {errors.description?.type === "required" && (
                     <p
                       role="alert"
                       className="text-sm text-red-500"
                     >
-                      City is required
-                    </p>
-                  )}
-                </div>
-
-                <div className="py-2 space-y-1  ">
-                  <label htmlFor="district">District</label>
-                  <Input
-                    {...register("district", { required: true })}
-                    className="bg-gray-900 border-none text-gray-100"
-                  />
-                  {errors.district?.type === "required" && (
-                    <p
-                      role="alert"
-                      className="text-sm text-red-500"
-                    >
-                      District is required
-                    </p>
-                  )}
-                </div>
-                <div className="py-2 space-y-1  ">
-                  <label htmlFor="state">State</label>
-                  <Input
-                    {...register("state", { required: true })}
-                    className="bg-gray-900 border-none text-gray-100"
-                  />
-                  {errors.state?.type === "required" && (
-                    <p
-                      role="alert"
-                      className="text-sm text-red-500"
-                    >
-                      State is required
+                      Description is required
                     </p>
                   )}
                 </div>
@@ -183,4 +141,4 @@ const ClientDialog = ({ type, submitHandler }: ClientDialogProps) => {
   );
 };
 
-export default ClientDialog;
+export default ProductDialog;
