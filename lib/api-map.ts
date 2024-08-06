@@ -7,4 +7,5 @@ export const ApiSuffix = {
     addClient: "/api/clients/",
     getProducts: "/api/products/",
     addProduct: "/api/products/",
+    createInvoice:"/api/bills/"
 }

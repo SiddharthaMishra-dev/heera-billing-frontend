@@ -1,7 +1,7 @@
 import ClientDialog from "@/components/ClientDialog";
-import Datatable from "@/components/Datatable";
-import {} from "@/components/ui/dialog";
-import { ApiSuffix, BaseUrl } from "@/utils/api-map";
+import Datatable from "@/components/ClientTable";
+import Sidebar from "@/components/Sidebar";
+import { ApiSuffix, BaseUrl } from "@/lib/api-map";
 import { revalidatePath } from "next/cache";
 
 interface ClientProps {
@@ -58,10 +58,11 @@ const Client = async () => {
   const clients = await fetchClients();
 
   return (
-    <>
-      <main className=" min-h-screen w-full py-3 px-2 text-gray-400">
+    <main className="flex min-h-screen">
+      <Sidebar />
+      <section className=" w-full py-3 px-2 text-gray-800">
         <h1 className="text-4xl font-bold">Clients</h1>
-        <div className="w-full max-w-7xl p-2 mx-auto">
+        <div className="w-full max-w-7xl py-3">
           <ClientDialog
             type="Add"
             submitHandler={handleAddClient}
@@ -70,8 +71,8 @@ const Client = async () => {
             <Datatable data={clients.data} />
           </section>
         </div>
-      </main>
-    </>
+      </section>
+    </main>
   );
 };
 

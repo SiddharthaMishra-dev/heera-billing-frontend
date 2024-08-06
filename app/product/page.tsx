@@ -1,6 +1,8 @@
-import Datatable from "@/components/Datatable";
 import ProductDialog from "@/components/ProductDialog";
-import { ApiSuffix, BaseUrl } from "@/utils/api-map";
+import Datatable from "@/components/ProductTable";
+import Sidebar from "@/components/Sidebar";
+import { ApiSuffix, BaseUrl } from "@/lib/api-map";
+import { Loader2 } from "lucide-react";
 import { revalidatePath } from "next/cache";
 
 interface ProductProps {
@@ -51,13 +53,21 @@ const Product = async () => {
     }
   };
 
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token == null || token == undefined) {
+      revalidatePath("/login");
+    }
+  }
+
   const products = await fetchProducts();
 
   return (
-    <>
-      <main className=" min-h-screen w-full py-3 px-2 text-gray-400">
+    <main className="flex min-h-screen">
+      <Sidebar />
+      {/* <section className="w-full py-3 px-4 text-gray-800">
         <h1 className="text-4xl font-bold">Products</h1>
-        <div className="w-full max-w-7xl p-2 mx-auto">
+        <div className="w-full max-w-7xl py-3 ">
           <ProductDialog
             type="Add"
             submitHandler={handleAddProduct}
@@ -66,8 +76,27 @@ const Product = async () => {
             <Datatable data={products.data} />
           </section>
         </div>
-      </main>
-    </>
+      </section> */}
+
+      {typeof window !== "undefined" ? (
+        <section className="w-full py-3 px-4 text-gray-800">
+          <h1 className="text-4xl font-bold">Products</h1>
+          <div className="w-full max-w-7xl py-3 ">
+            <ProductDialog
+              type="Add"
+              submitHandler={handleAddProduct}
+            />
+            <section className="mt-2 w-full">
+              <Datatable data={products.data} />
+            </section>
+          </div>
+        </section>
+      ) : (
+        <div className="min-h-screen w-full flex justify-center items-center">
+          <Loader2 className="h-10 w-10 animate-spin" />
+        </div>
+      )}
+    </main>
   );
 };
 

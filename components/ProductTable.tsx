@@ -11,11 +11,8 @@ interface DatatableProps {
   data: {
     id: string;
     name: string;
-    gst: string;
-    address: string;
-    city: string;
-    district: string;
-    state: string;
+    hsncode: string;
+    description: string;
   }[];
 }
 
@@ -23,12 +20,11 @@ const Datatable = (dataTable: DatatableProps) => {
   return (
     <Table>
       <TableHeader>
-        <TableRow className="hover:bg-muted/10">
+        <TableRow className="hover:bg-muted/10 ">
           <TableHead className="w-[100px]">ID</TableHead>
           <TableHead>Name</TableHead>
-          <TableHead>Address</TableHead>
-          <TableHead className="text-right">City</TableHead>
-          <TableHead className="text-right">District</TableHead>
+          <TableHead>HSN Code</TableHead>
+          <TableHead>Description</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -36,15 +32,14 @@ const Datatable = (dataTable: DatatableProps) => {
           dataTable.data.map((row) => (
             <TableRow
               key={row.id}
-              className="hover:bg-muted/10"
+              className="hover:bg-muted/10 text-slate-700"
             >
               <TableCell className="font-medium truncate overflow-hidden max-w-[120px]">
                 {row.id}
               </TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.address}</TableCell>
-              <TableCell className="text-right">{row.city}</TableCell>
-              <TableCell className="text-right">{row.district}</TableCell>
+              <TableCell>{row.hsncode}</TableCell>
+              <TableCell>{row.description}</TableCell>
             </TableRow>
           ))}
         {dataTable.data.length === 0 && (

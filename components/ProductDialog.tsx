@@ -55,7 +55,7 @@ const ProductDialog = ({ type, submitHandler }: ProductDialogProps) => {
   return (
     <>
       <div className="mt-3 flex justify-between items-center">
-        <h3 className="text-2xl font-semibold">All Clients</h3>
+        <h3 className="text-2xl font-semibold">All Products</h3>
         <Dialog
           open={open}
           onOpenChange={setOpen}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ApiSuffix, BaseUrl } from "@/utils/api-map";
+import { ApiSuffix, BaseUrl } from "@/lib/api-map";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
